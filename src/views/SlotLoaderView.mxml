@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="init(event)" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Loading..." xmlns:ete="services.ete.*">
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import com.adobe.serializers.utility.TypeUtility;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.Sort;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			protected var results:ArrayCollection = null;
+			
+			
+			protected function getSessionsResult_resultHandler(event:ResultEvent):void
+			{
+				results = event.result.slot as ArrayCollection;
+				navigator.pushView(SlotView, results);
+				
+			}
+			
+			
+			protected function init(event:FlexEvent):void
+			{
+				getSessionsResult.token = ete.getSessions();				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<fx:Declarations>
+		<s:CallResponder id="getSessionsResult" result="getSessionsResult_resultHandler(event)"/>
+		<ete:Ete id="ete" />
+	</fx:Declarations>
+</s:View>

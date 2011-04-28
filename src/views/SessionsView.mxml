@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="{data.startTime}" creationComplete="init(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			protected var sessionAC:ArrayCollection = new ArrayCollection();
+			
+			protected function init(event:FlexEvent):void
+			{
+				this.title = formatDate(data.startTime);
+				sessionAC = data.session as ArrayCollection;
+				sessionList.dataProvider = sessionAC;
+				
+			}
+			
+			public function formatDate(obj:Object):String{
+				var day:int = obj.date -26;
+				var hours:String = obj.hours.toString();
+				var mins:String = obj.minutes.toString();
+				var timeFlag:String = "AM";
+				
+				if (mins.length == 1){
+					mins = "0" + mins;
+				}
+				
+				if (obj.hours > 12){
+					var tmp:int = obj.hours - 12;
+					hours = tmp.toString();
+					timeFlag = "PM";
+				}
+				
+				return "Day " + day.toString() + " " + hours + ":" +  mins + " " + timeFlag;
+			}
+			
+			protected function sessionList_clickHandler(event:MouseEvent):void
+			{
+				navigator.pushView(views.SessionView, sessionList.selectedItem);				
+			}
+			
+			protected function backBtn_clickHandler(event:MouseEvent):void
+			{
+				navigator.popView();
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:navigationContent>
+		<s:Button id="backBtn" label="Back" click="backBtn_clickHandler(event)" />
+	</s:navigationContent>
+	
+	
+	<s:List id="sessionList" left="10" right="10" top="10" bottom="10"
+			alternatingItemColors="[0xffffff,0xeeeeee]"
+			click="sessionList_clickHandler(event)">
+		<s:itemRenderer>
+			<fx:Component>
+				<s:IconItemRenderer labelField="name" messageField="speaker">
+					
+				</s:IconItemRenderer>
+			</fx:Component>			
+		
+		</s:itemRenderer>
+	</s:List>
+</s:View>

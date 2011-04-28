@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:ete="services.ete.*"
+		creationComplete="init(event)"
+		title="Sessions">
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serializers.utility.TypeUtility;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.Sort;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			
+			protected var results:ArrayCollection = null;
+			
+			protected function init(event:FlexEvent):void
+			{
+				slotList.dataProvider = data as ArrayCollection;
+			}
+			
+
+
+			
+			protected function slotList_clickHandler(event:MouseEvent):void
+			{
+				if (slotList.selectedItem != null){
+					navigator.pushView(views.SessionsView, slotList.selectedItem);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:List id="slotList" left="10" right="10" top="10" bottom="10" click="slotList_clickHandler(event)"
+			alternatingItemColors="[0xffffff,0xeeeeee]"
+			labelField="startTime">
+		<s:itemRenderer>
+			<fx:Component>
+				
+				<s:IconItemRenderer labelFunction="formatDate">
+					<fx:Script>
+						<![CDATA[
+							public function formatDate(obj:Object):String{
+								var day:int = obj.startTime.date -26;
+								var hours:String = obj.startTime.hours.toString();
+								var mins:String = obj.startTime.minutes.toString();
+								var timeFlag:String = "AM";
+								
+								if (mins.length == 1){
+									mins = "0" + mins;
+								}
+								
+								if (obj.startTime.hours > 12){
+									var tmp:int = obj.startTime.hours - 12;
+									hours = tmp.toString();
+									timeFlag = "PM";
+								}
+								
+								return "Day " + day.toString() + " " + hours + ":" +  mins + " " + timeFlag;
+							}
+						]]>
+					</fx:Script>	
+				</s:IconItemRenderer>	
+			</fx:Component>
+			
+			
+			
+		</s:itemRenderer>
+		
+		
+	</s:List>
+	
+</s:View>

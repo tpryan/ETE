@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:ete="services.ete.*"
+		title="Speakers" creationComplete="init(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serializers.utility.TypeUtility;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.ResultEvent;
+			
+
+			
+			protected function speakerList_clickHandler(event:MouseEvent):void
+			{
+				navigator.pushView(views.SpeakerView,speakerList.selectedItem);
+				
+			}
+			
+			protected function init(event:FlexEvent):void
+			{
+				speakerList.dataProvider = data as ArrayCollection;				
+			}
+			
+		]]>
+	</fx:Script>
+	<s:List id="speakerList" left="10" right="10" top="10" bottom="10" click="speakerList_clickHandler(event)"
+			labelField="name" alternatingItemColors="[0xffffff,0xeeeeee]">
+		<s:itemRenderer>
+			<fx:Component>
+				<s:IconItemRenderer labelField="name" messageField="position" iconField="image" iconPlaceholder="@Embed('assets/holder.png')">
+					
+				</s:IconItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>
+	
+	</s:List>
+</s:View>

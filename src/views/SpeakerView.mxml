@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="" creationComplete="init(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import spark.components.supportClasses.StyleableTextField;
+			
+			protected function init(event:FlexEvent):void
+			{
+				var bio:StyleableTextField = new StyleableTextField;
+				bio.left = 10;
+				bio.right = 10;
+				bio.top = 118;
+				bio.bottom = 10;
+				bio.htmlText = data.bio;
+				bio.wordWrap = true;
+				bio.setStyle("color",0x999999);
+				bio.selectable = false;
+				bio.setStyle("fontSize",20);
+				addElement(bio);
+			}
+			
+			protected function backBtn_clickHandler(event:MouseEvent):void
+			{
+				navigator.popView();	
+			}
+			
+		]]>
+	</fx:Script>
+	
+
+	<s:navigationContent>
+		<s:Button id="backBtn" label="Back" click="backBtn_clickHandler(event)" />
+		
+	</s:navigationContent>	
+	
+	<s:Image x="10" y="10" width="80" height="100" source="{data.image}"/>
+	<s:Label id="nameField" left="97" top="12" text="{data.name}" />
+	<s:Label id="position" left="97" top="49" color="#555555" text="{data.position}"/>
+	<s:Label id="twitter" left="97" top="86" text="{data.twitter}"/>
+</s:View>

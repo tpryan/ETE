@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TabbedViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009" creationComplete="init(event)"
+								  xmlns:s="library://ns.adobe.com/flex/spark" splashScreenImage="@Embed('assets/logo.png')">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			protected function init(event:FlexEvent):void
+			{
+				tabbedNavigator.tabBar.setStyle("chromeColor",0x0B89AF);
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		
+		global
+		{
+			font-family: "Lucida Sans Unicode";
+			color: #0B89AF;
+			fontSize: 25px;
+			
+		}
+		
+		s|ActionBar 
+		{
+			chrome-color: #0B89AF;
+			
+		}
+		
+		
+		#messageDisplay{
+			fontSize: 20px;
+		}
+		
+		
+		
+	</fx:Style>
+	
+	
+	<s:ViewNavigator name="sessions" firstView="views.SlotLoaderView" label="Sessions" height="100%" width="100%" /> 
+	<s:ViewNavigator name="speakers" firstView="views.SpeakerLoaderView" label="Speakers" height="100%" width="100%" /> 
+</s:TabbedViewNavigatorApplication>

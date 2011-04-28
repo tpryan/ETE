@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="" creationComplete="init(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import spark.components.supportClasses.StyleableTextField;
+			
+			protected function init(event:FlexEvent):void
+			{
+				var description:StyleableTextField = new StyleableTextField;
+				description.left = 10;
+				description.right = 10;
+				description.top = 80;
+				description.bottom = 61;
+				description.htmlText = data.description;
+				description.wordWrap = true;
+				description.setStyle("color",0x999999);
+				description.selectable = false;
+				description.setStyle("fontSize",20);
+
+				addElement(description);
+				
+				
+				slot.text = formatSlotString(data.starttime, data.endtime);
+				
+			}
+			
+			public function formatSlotString(start:Date,end:Date):String
+			{
+				var lstart:String = massageTime(start);
+				var lend:String = massageTime(end);
+				
+				return lstart + " - " + lend;
+				
+				
+				
+			}
+			
+			public function massageTime(date:Date):String
+			{
+				var hours:String = massageHours(date.hours);;
+				var mins:String = messageMins(date.minutes);
+				var timeFlag:String = "AM";
+				
+				if (date.hours >= 12){
+					timeFlag = "PM";
+				}
+				
+				return hours +":"+mins+ " " + timeFlag;
+			}
+			
+			protected function backBtn_clickHandler(event:MouseEvent):void
+			{
+				navigator.popView();
+				
+			}
+			
+			private function massageHours(hours:int):String
+			{
+				var result:int = hours;
+				
+				if (result > 12){
+					result = result -12;
+				}
+				
+				return result.toString();
+				
+			}
+			
+			private function messageMins(minutes:Number):String
+			{
+				var result:String = minutes.toString();
+				if (result.length == 1){
+					result = "0" + result;
+				}
+				return result;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:navigationContent>
+		<s:Button id="backBtn" label="Back" click="backBtn_clickHandler(event)" />
+	</s:navigationContent>
+	
+	<s:Label id="nameField" left="10" top="10" text="{data.name}" />
+	<s:Label id="speaker" left="10" top="43" text="{data.speaker}" color="0x555555"/>
+	<s:Label id="location" left="10" bottom="10" text="{data.location}"/>
+	<s:Label id="slot" left="10" right="10" top="431"/>
+</s:View>
